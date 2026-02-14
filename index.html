@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>For Jamie 💌</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sacramento&family=Playfair+Display:wght@400;600&family=Nunito:wght@300;400;600&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- Background layers -->
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    <div class="hearts-container"></div>
+
+    <div class="page-wrapper">
+
+   <!-- SECTION 1: ENVELOPE -->
+    <section id="envelope-section" class="section center-section">
+        <div class="envelope-container">
+
+            <div id="valentine-envelope" class="env env--closed">
+                <div class="env__flap"></div>
+                <div class="env__pocket"></div>
+                <div class="env__letter">
+                    <div class="env__line env__line--1"></div>
+                    <div class="env__line env__line--2"></div>
+                    <div class="env__line env__line--3"></div>
+                    <div class="env__line env__line--4"></div>
+                </div>
+            </div>
+
+            <div class="envelope-to-text">To Jamie</div>
+
+            <button id="open-button" class="open-button">
+                <span>Tap to open</span>
+                <span class="arrow">↓</span>
+            </button>
+
+        </div>
+    </section>
+
+    <div class="section-hearts">♥ ♥ ♥</div>
+            
+    <!-- SECTION 2: LETTER -->
+
+        <section id="letter-section" class="section">
+            <h2 class="valentine-heading">Happy Valentine’s</h2>
+            <div class="letter-card">
+                <h1 class="letter-title">Dear Jamie,</h1>
+
+                <p class="letter-text">
+                    Since our wonderful snowy last Valentines in Romania, I've cherished the deep, comforting love we've grown together. It's been such a special year, and it feels so magical to have you by my side xo
+                </p>
+                <p class="letter-text">
+                    So Happy Valentine's to you darling, I'm honoured to be yours today, but more importantly on every other. The ordinary Tuesdays we make so special with simple moments, the hard days we curl up cozy and escape the world, and the exciting adventures we go on, hand in hand.
+                </p>
+                <p class="letter-text">
+                    Thank you for being part of my chosen Ohana. For your comedic ways of brightening cloudy days and making me feel all bundled up & safe. The wonderful way your eyes dilate and you get all endearingly sentimental over the little things. Listing such wonders would take much a time, bundled into a tapestry expressing deeply that I love you Jamie, and all the ways we make wonderful in the ordinary. Here's to hoping for many more Valentines together, with so much wonder in between.
+                </p>
+
+                <p class="letter-signoff">
+                    Love,<br />
+                    <span class="signature">Gemma ❤️</span>
+                </p>
+
+                <button id="memories-button" class="memories-button">
+                    Our memories →
+                </button>
+            </div>
+        </section>
+
+        <div class="section-hearts">♥ ♥ ♥</div>
+
+        <!-- SECTION 3: PHOTO CAROUSEL -->
+        <section id="photos-section" class="section">
+            <h2 class="section-heading">Cherished Memories ✨</h2>
+
+            <div class="carousel">
+                <button class="carousel-control prev" aria-label="Previous photo">‹</button>
+                <div class="carousel-window">
+                    <div class="carousel-track">
+                    </div>
+                </div>
+                <button class="carousel-control next" aria-label="Next photo">›</button>
+            </div>
+
+            <div class="carousel-dots"></div>
+
+            <p class="final-note">
+                Looking forwards to many more adventues with you. Happy Valentines Day xo
+            </p>
+
+            <button id="restart-button" class="restart-button">
+                Start again ↺
+            </button>
+        </section>
+    </div>
+
+    <!-- Main JS -->
+    <script src="script.js"></script>
+</body>
+</html>

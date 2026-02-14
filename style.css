@@ -1,0 +1,513 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+  background: linear-gradient(
+      to bottom,
+      #1d2b64 0%,   /* bright blue top */
+      #0f1430 40%,  /* mid soft blue */
+      #090909 75%,  /* deep navy fade */
+      #01010a 100%  /* almost black bottom */
+  );
+  background-attachment: fixed;
+}
+
+.twinkling {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: -3;
+}
+
+.twinkling {
+    background: url("https://www.transparenttextures.com/patterns/stardust.png");
+    opacity: 0.15;
+    animation: twinkle 10s linear infinite alternate;
+    background-size: 600px 600px;
+}
+
+@keyframes twinkle {
+    from {
+        opacity: 0.08;
+    }
+    to {
+        opacity: 0.2;
+    }
+}
+
+/* Floating hearts */
+.hearts-container {
+    position: fixed;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.heart {
+    position: absolute;
+    font-size: 22px; /* JS will randomise size */
+    color: #ff5c94;
+    opacity: 0.9;
+    animation: floatUp 8s linear infinite;
+    filter: drop-shadow(0 0 8px rgba(255, 92, 148, 0.7));
+}
+
+.heart::before {
+    content: "♥";
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.85;
+    }
+    100% {
+        transform: translateY(-20vh);
+        opacity: 0;
+    }
+}
+
+/* Layout */
+.page-wrapper {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.section {
+    padding: 4rem 1.5rem 3rem;
+    max-width: 600px;
+    margin: 0 auto;
+    background: transparent !important;
+}
+
+.center-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: clamp(100px, 16vh, 200px);
+}
+
+.section-hearts {
+  text-align: center;
+  font-size: 1.3rem;
+  color: rgba(255, 92, 148, 0.6);
+  margin: 2.2rem 0 1.4rem;
+  letter-spacing: 0.4rem;
+  filter: drop-shadow(0 0 6px rgba(255, 92, 148, 0.5));
+}
+
+/* Envelope section */
+.envelope-container {
+    text-align: center;
+}
+
+/* Envelope block */
+#valentine-envelope {
+    position: relative;
+    width: 280px;
+    height: 180px;
+    margin: 0 auto 1.5rem;
+    border-radius: 0 0 18px 18px;
+    background: #ffc3dd; 
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+    overflow: visible; /* allow letter to escape upwards */
+}
+
+/* Base flap + pocket */
+#valentine-envelope .env__flap,
+#valentine-envelope .env__pocket {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+/* Bottom + side flaps */
+#valentine-envelope .env__pocket {
+    border-left: 140px solid #ff9ac9;  
+    border-right: 140px solid #ff9ac9;   
+    border-bottom: 90px solid #ffc3dd;   
+    border-top: 90px solid transparent;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    bottom: 0;
+    z-index: 3;   /* above the lower part of the letter */
+}
+
+/* Top flap */
+#valentine-envelope .env__flap {
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-bottom: 82px solid transparent;
+    border-top: 98px solid #ff5c94;
+    top: 0;
+    transform-origin: top;
+    transition: transform 0.4s ease, z-index 0.6s;
+    pointer-events: none;
+}
+
+/* Letter inside envelope */
+#valentine-envelope .env__letter {
+    position: relative;
+    width: 90%;
+    height: 90%;
+    margin: 0 auto;
+    top: 5%;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 26px rgba(0, 0, 0, 0.18);
+    transition: transform 0.4s ease 0.4s, z-index 0.4s;
+    overflow: hidden;
+}
+
+/* Gray lines on letter*/
+#valentine-envelope .env__line {
+    position: absolute;
+    left: 10%;
+    width: 80%;
+    height: 14%;
+    background: #EEEFF0;
+    border-radius: 4px;
+}
+
+#valentine-envelope .env__line--1 {
+    top: 15%;
+    width: 30%;
+    height: 7%;
+}
+#valentine-envelope .env__line--2 { top: 32%; }
+#valentine-envelope .env__line--3 { top: 52%; }
+#valentine-envelope .env__line--4 { top: 72%; }
+
+/* -------- Envelope States -------- */
+/* Closed */
+.env--closed .env__flap {
+    transform: rotateX(0deg);
+    z-index: 4;
+}
+.env--closed .env__letter {
+    transform: translateY(0);
+    z-index: 2;   /* behind pocket (3), above envelope body (1) */
+}
+
+/* OPEN */
+.env--open .env__flap {
+    transform: rotateX(180deg);
+    z-index: 1;   /* flap goes behind */
+}
+
+.env--open .env__letter {
+    transform: translateY(-60px);
+    z-index: 2;   /* pocket (3) still above the lower part */
+}
+
+/* "To Jamie" text */
+.envelope-to-text {
+    margin-bottom: 0.9rem;
+    margin-top: 0.6rem;
+    font-family: 'Sacramento', cursive;
+    font-size: 2.2rem;
+    color: #ffe0ff;
+    text-shadow:
+        0 0 6px rgba(255, 155, 210, 0.9),
+        0 0 18px rgba(255, 255, 255, 0.5);
+}
+
+.open-button {
+    margin-top: 1.4rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffe5f2;
+    padding: 0.7rem 1.4rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    transition: 
+        background 0.3s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.open-button:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.open-button:active {
+    transform: scale(0.96); 
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.open-button .arrow {
+    display: inline-block;
+    animation: bounce 1.5s infinite;
+}
+
+
+.valentine-heading {
+  text-align: center;
+  margin: 0 0 1.1rem;
+  font-family: 'Sacramento', cursive;
+  font-size: 2.2rem;
+  color: #ffb3d4;
+  -webkit-text-stroke: 0;
+  text-stroke: 0;
+}
+
+/* Letter section */
+.letter-card {
+    background: linear-gradient(145deg, #1a1930, #111019);
+    border-radius: 16px;
+    padding: 2.5rem 1.75rem 2rem;
+    box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 12px 30px rgba(0, 0, 0, 0.55);
+    position: relative;
+    overflow: hidden;
+}
+
+.letter-card::before {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    background: radial-gradient(circle at top left, rgba(255, 92, 148, 0.12), transparent 50%);
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.letter-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+    color: #ffcedf;
+}
+
+.letter-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 0.9rem;
+    color: #f3e7ff;
+}
+
+.letter-signoff {
+    margin-top: 1.4rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #f3e7ff;
+}
+
+.signature {
+    font-family: 'Sacramento', cursive;
+    font-size: 2rem;
+    color: #ff9bb5;
+    text-shadow:
+        0 0 6px rgba(255, 155, 181, 0.7),
+        0 0 14px rgba(255, 255, 255, 0.4);
+}
+
+/* Button to memories */
+.memories-button {
+    margin-top: 1.8rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: transparent;
+    color: #ffe5f2;
+    padding: 0.7rem 1.4rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    transition: background 0.3s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.memories-button::after {
+    content: "✨";
+}
+
+.memories-button:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.memories-button:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Photos section */
+.section-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #ffe1ff;
+}
+
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.carousel-window {
+    width: 100%;
+    max-width: 380px;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 18px 40px rgba(0, 0, 0, 0.9);
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.45s ease;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    position: relative;
+    background: #050608;
+}
+
+.carousel-slide img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.carousel-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.6rem 0.8rem;
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.8));
+    font-size: 0.85rem;
+    color: #ffeef7;
+    font-weight: 400;
+}
+
+/* Carousel controls */
+.carousel-control {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffe5f2;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.4rem;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s ease, transform 0.12s ease;
+}
+
+.carousel-control:active {
+    transform: scale(0.9);
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease, width 0.2s ease;
+}
+
+.carousel-dot.active {
+    background: #ff5c94;
+    transform: scale(1.6);
+    width: 12px;
+}
+
+/* Final note & restart */
+.final-note {
+    text-align: center;
+    font-size: 0.95rem;
+    color: #f9e3ff;
+    margin-bottom: 1.2rem;
+}
+
+.restart-button {
+    display: block;
+    margin: 0 auto;
+    border: none;
+    border-radius: 999px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffe9f5;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s ease, transform 0.12s ease;
+}
+
+.restart-button:active {
+    transform: scale(0.96);
+}
+
+.restart-button:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* Responsive tweaks */
+@media (max-width: 400px) {
+    .envelope {
+        width: 220px;
+        height: 150px;
+    }
+
+    .letter-card {
+        padding: 2rem 1.4rem 1.7rem;
+    }
+
+    .letter-title {
+        font-size: 1.5rem;
+    }
+}
